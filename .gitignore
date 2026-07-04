@@ -20,15 +20,8 @@
 # production
 /build
 
-# OS files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Thumbs.db
-
 # misc
+.DS_Store
 *.pem
 
 # debug
@@ -37,11 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
-.env*.local
-.env.development
-.env.production
-!.env.example
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
@@ -50,12 +40,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# AI context files
-AGENTS.md
-CLAUDE.md
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo

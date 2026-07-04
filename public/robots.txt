@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eshop-ten-gold.vercel.app/sitemap.xml

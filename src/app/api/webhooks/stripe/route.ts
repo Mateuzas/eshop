@@ -48,6 +48,23 @@ export async function POST(request: Request) {
       break;
     }
 
+    // Fired by the /checkout PaymentElement flow, which creates a
+    // PaymentIntent directly rather than a Checkout Session.
+    case "payment_intent.succeeded": {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      if (paymentIntent.metadata?.orderId) {
+        await getDb()
+          .update(orders)
+          .set({
+            status: "paid",
+            stripePaymentId: paymentIntent.id,
+            updatedAt: new Date(),
+          })
+          .where(eq(orders.id, paymentIntent.metadata.orderId));
+      }
+      break;
+    }
+
     case "payment_intent.payment_failed": {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       if (paymentIntent.metadata?.orderId) {

@@ -81,11 +81,13 @@
   --brand-foreground: oklch(0.985 0 0);
   /* Primary UI typeface. "HelveticaNeueLTPro-cn" is a licensed Linotype
      font — not self-hosted here, only used if a visitor already has it
-     installed locally. Falls back through free, metrically-similar
-     condensed grotesks so unlicensed visitors still get a close match. */
+     installed locally. Everyone else gets Archivo Narrow, a free true
+     condensed grotesque self-hosted via next/font (see layout.tsx) —
+     a much closer match to Helvetica Neue Condensed's proportions than
+     a naive squished-Arial fallback. */
   --font-condensed:
-    "HelveticaNeueLTPro-cn", "Helvetica Neue Condensed", "Arial Narrow",
-    "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+    "HelveticaNeueLTPro-cn", "Helvetica Neue Condensed", var(--font-archivo-narrow),
+    "Arial Narrow", sans-serif;
   /* Used sparingly (e.g. the wordmark) — ships as a system font on
      macOS/iOS/iPadOS, so no licensing/self-hosting concern there. Falls
      back to other humanist sans faces on platforms without it. */

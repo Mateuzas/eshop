@@ -8,7 +8,7 @@ export function Logo({ className }: { className?: string }) {
       href="/"
       aria-label="EShop — Home"
       className={cn(
-        "text-base font-medium tracking-[0.3em] uppercase",
+        "font-optima text-base font-medium tracking-[0.3em] uppercase",
         className
       )}
     >

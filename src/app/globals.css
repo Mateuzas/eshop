@@ -7,9 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-condensed);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
+  --font-optima: var(--font-optima);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -78,6 +79,17 @@
   /* Clay/rust accent — used sparingly for sale tags, active states, wishlist. */
   --brand: oklch(0.5 0.13 40);
   --brand-foreground: oklch(0.985 0 0);
+  /* Primary UI typeface. "HelveticaNeueLTPro-cn" is a licensed Linotype
+     font — not self-hosted here, only used if a visitor already has it
+     installed locally. Falls back through free, metrically-similar
+     condensed grotesks so unlicensed visitors still get a close match. */
+  --font-condensed:
+    "HelveticaNeueLTPro-cn", "Helvetica Neue Condensed", "Arial Narrow",
+    "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+  /* Used sparingly (e.g. the wordmark) — ships as a system font on
+     macOS/iOS/iPadOS, so no licensing/self-hosting concern there. Falls
+     back to other humanist sans faces on platforms without it. */
+  --font-optima: Optima, Candara, "Noto Sans", "Segoe UI", sans-serif;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -171,5 +183,11 @@
   }
   .pt-safe {
     padding-top: env(safe-area-inset-top);
+  }
+
+  /* Reserved for sparing, deliberate use (e.g. the wordmark) — not a
+     general-purpose heading font. */
+  .font-optima {
+    font-family: var(--font-optima);
   }
 }

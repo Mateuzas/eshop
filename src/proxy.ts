@@ -64,13 +64,9 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-     * - public folder assets
-     */
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Only run the Supabase auth check on routes that actually need it,
+    // so public storefront pages skip the auth round-trip.
+    "/admin/:path*",
+    "/account/:path*",
   ],
 };

@@ -39,6 +39,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -72,7 +74,10 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0rem;
+  /* Clay/rust accent — used sparingly for sale tags, active states, wishlist. */
+  --brand: oklch(0.5 0.13 40);
+  --brand-foreground: oklch(0.985 0 0);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -107,6 +112,8 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
+  --brand: oklch(0.62 0.13 40);
+  --brand-foreground: oklch(0.145 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -121,10 +128,48 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    /* Mobile smoothness: momentum scroll, no rubber-band overscroll bounce,
+       stable text sizing when rotating, safe-area aware. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Remove the gray tap-highlight flash on iOS/Android for a native feel. */
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer utilities {
+  /* Small uppercase, letter-spaced label used for nav items, eyebrow copy,
+     size/filter chips — the recurring "FOG-style" typographic signature. */
+  .kicker {
+    @apply text-xs font-medium uppercase tracking-[0.18em];
+  }
+
+  /* Large quiet headline used for hero/editorial sections. Scales down on
+     mobile so it never forces horizontal scroll on small viewports. */
+  .heading-display {
+    @apply text-4xl leading-[0.95] font-normal tracking-tight sm:text-5xl md:text-6xl;
+  }
+
+  /* Pads content to clear the iOS home indicator / notch when an element
+     sits flush against the bottom or top of the viewport (sticky bars,
+     bottom sheets, fixed nav). */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
   }
 }

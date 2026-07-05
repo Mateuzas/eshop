@@ -6,7 +6,10 @@ let _db: ReturnType<typeof drizzle<typeof schema>> | null = null;
 
 export function getDb() {
   if (!_db) {
-    const client = postgres(process.env.DATABASE_URL!);
+    // `prepare: false` is required when connecting through Supabase's
+    // transaction-mode pooler (port 6543), which doesn't support
+    // prepared statements.
+    const client = postgres(process.env.DATABASE_URL!, { prepare: false });
     _db = drizzle(client, { schema });
   }
   return _db;

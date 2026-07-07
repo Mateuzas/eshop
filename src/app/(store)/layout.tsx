@@ -9,7 +9,7 @@ export default function StoreLayout({
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-11 sm:pt-12">{children}</main>
       <Footer />
     </>
   );

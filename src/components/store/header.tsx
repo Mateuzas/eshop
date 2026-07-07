@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { eq } from "drizzle-orm";
 import { Menu, User } from "lucide-react";
 
+import { createClient } from "@/lib/supabase/server";
+import { getDb, schema } from "@/lib/db";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -16,7 +19,21 @@ import { NAV_LINKS } from "./nav-links";
 import { SearchTrigger } from "./search-trigger";
 import { CartTrigger } from "./cart-trigger";
 
-export function Header() {
+export async function Header() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let isAdmin = false;
+  if (user) {
+    const [profile] = await getDb()
+      .select({ role: schema.profiles.role })
+      .from(schema.profiles)
+      .where(eq(schema.profiles.id, user.id));
+    isAdmin = profile?.role === "admin";
+  }
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 pt-safe backdrop-blur supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-4 sm:h-16 sm:px-6 lg:px-8">
@@ -59,11 +76,24 @@ export function Header() {
                 ))}
               </nav>
               <div className="mt-auto flex flex-col px-4 pb-safe">
+                {isAdmin && (
+                  <SheetClose
+                    nativeButton={false}
+                    render={
+                      <Link
+                        href="/admin"
+                        className="border-t border-border py-4 text-2xl tracking-tight"
+                      />
+                    }
+                  >
+                    Admin
+                  </SheetClose>
+                )}
                 <SheetClose
                   nativeButton={false}
                   render={
                     <Link
-                      href="/auth/login"
+                      href={user ? "/account" : "/auth/login"}
                       className="kicker py-4 text-muted-foreground"
                     />
                   }
@@ -91,13 +121,21 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="kicker text-foreground/70 transition-colors hover:text-foreground"
+            >
+              Admin
+            </Link>
+          )}
         </nav>
 
         {/* Icon actions */}
         <div className="flex flex-1 items-center justify-end gap-0.5">
           <SearchTrigger />
           <Link
-            href="/auth/login"
+            href={user ? "/account" : "/auth/login"}
             aria-label="Account"
             className={buttonVariants({
               variant: "ghost",

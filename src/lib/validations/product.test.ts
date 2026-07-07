@@ -13,7 +13,17 @@ describe("productSchema", () => {
       expect(result.data.description).toBe("");
       expect(result.data.stockQty).toBe(1);
       expect(result.data.isPublished).toBe(false);
+      expect(result.data.images).toEqual([]);
     }
+  });
+
+  it("rejects more than 8 images", () => {
+    const result = productSchema.safeParse({
+      name: "Cotton Overshirt",
+      priceCents: 4900,
+      images: Array.from({ length: 9 }, (_, i) => `https://example.com/${i}.jpg`),
+    });
+    expect(result.success).toBe(false);
   });
 
   it("rejects a price below 1 cent", () => {

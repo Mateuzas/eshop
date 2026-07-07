@@ -30,6 +30,7 @@ export const products = pgTable("products", {
   stockQty: integer("stock_qty").notNull().default(1),
   category: text("category"),
   images: jsonb("images").$type<string[]>().notNull().default([]),
+  videoUrl: text("video_url"),
   isPublished: boolean("is_published").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()

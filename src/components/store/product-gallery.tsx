@@ -4,12 +4,14 @@ import { PlaceholderImage } from "./placeholder-image";
 
 export function ProductGallery({
   images,
+  videoUrl,
   name,
 }: {
   images: string[];
+  videoUrl?: string | null;
   name: string;
 }) {
-  if (images.length === 0) {
+  if (images.length === 0 && !videoUrl) {
     return (
       <div className="relative aspect-3/4 w-full overflow-hidden bg-muted">
         <PlaceholderImage className="absolute inset-0" label={name} />
@@ -36,6 +38,18 @@ export function ProductGallery({
             />
           </div>
         ))}
+        {videoUrl && (
+          <div className="relative aspect-3/4 w-[85vw] shrink-0 snap-center overflow-hidden bg-muted sm:w-[60vw]">
+            <video
+              src={videoUrl}
+              poster={images[0]}
+              controls
+              playsInline
+              preload="none"
+              className="absolute inset-0 size-full object-cover"
+            />
+          </div>
+        )}
       </div>
 
       {/* Desktop: stacked vertical scroll, one image per viewport row. */}
@@ -55,6 +69,18 @@ export function ProductGallery({
             />
           </div>
         ))}
+        {videoUrl && (
+          <div className="relative aspect-3/4 w-full overflow-hidden bg-muted">
+            <video
+              src={videoUrl}
+              poster={images[0]}
+              controls
+              playsInline
+              preload="none"
+              className="absolute inset-0 size-full object-cover"
+            />
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,13 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { PlaceholderImage } from "./placeholder-image";
+import { siteMedia } from "@/lib/media";
 
 export function HeroSection() {
   return (
     <section className="relative h-[92svh] min-h-[560px] w-full">
-      <PlaceholderImage
-        className="absolute inset-0"
-        label="Hero photography"
+      <Image
+        src={siteMedia("website_pics/dubyssa_1736428552_3541741862445442335_2289332988.jpg")}
+        alt="Fall / Winter Collection"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
       />
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:p-10 lg:p-14">
         <span className="kicker text-foreground/70">

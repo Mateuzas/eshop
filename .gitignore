@@ -20,6 +20,10 @@
 # production
 /build
 
+# local-only media for dev preview (mirrors the site-media Supabase bucket —
+# see src/lib/media.ts)
+/public/dev-media
+
 # misc
 .DS_Store
 *.pem

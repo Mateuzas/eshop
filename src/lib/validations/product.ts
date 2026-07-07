@@ -6,6 +6,8 @@ export const productSchema = z.object({
   priceCents: z.number().int().min(1, "Price must be at least 1 cent"),
   stockQty: z.number().int().min(0).default(1),
   category: z.string().max(100).nullable().optional(),
+  images: z.array(z.string()).max(8).default([]),
+  videoUrl: z.string().url().nullable().optional(),
   isPublished: z.boolean().default(false),
 });
 

@@ -14,7 +14,9 @@ function safeRedirectPath(redirectTo: string | undefined) {
   if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
     return redirectTo;
   }
-  return "/account";
+  // `/account` doesn't exist yet (a later phase), so fall back to the
+  // homepage rather than sending users to a 404 right after signing in.
+  return "/";
 }
 
 export async function login(
@@ -71,4 +73,10 @@ export async function signup(
   }
 
   redirect(safeRedirectPath(redirectTo));
+}
+
+export async function logout() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/auth/login");
 }

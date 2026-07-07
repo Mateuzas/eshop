@@ -53,7 +53,11 @@ export default async function ProductPage({
   return (
     <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-        <ProductGallery images={product.images} name={product.name} />
+        <ProductGallery
+          images={product.images}
+          videoUrl={product.videoUrl}
+          name={product.name}
+        />
         <div className="lg:sticky lg:top-24 lg:self-start">
           <ProductInfoPanel product={product} />
         </div>

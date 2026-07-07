@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search as SearchIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,7 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function SearchTrigger() {
+export function SearchTrigger({ className }: { className?: string }) {
   const router = useRouter();
   const [value, setValue] = useState("");
 
@@ -22,15 +23,17 @@ export function SearchTrigger() {
     <Sheet>
       <SheetTrigger
         render={
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
+            type="button"
             aria-label="Search"
-            className="size-11 lg:size-9"
+            className={cn(
+              "kicker flex h-11 items-center px-3 transition-opacity hover:opacity-60 lg:h-auto lg:px-0",
+              className
+            )}
           />
         }
       >
-        <SearchIcon className="size-5" />
+        Search
       </SheetTrigger>
 
       <SheetContent side="top" className="border-none pt-safe">

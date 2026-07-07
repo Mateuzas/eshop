@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 
 import { useCartHydrated, useCartStore } from "@/lib/store/cart";
 import { cn, formatPrice } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
@@ -18,7 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function CartTrigger() {
+export function CartTrigger({ className }: { className?: string }) {
   const mounted = useCartHydrated();
 
   const items = useCartStore((s) => s.items);
@@ -35,20 +35,17 @@ export function CartTrigger() {
     <Sheet>
       <SheetTrigger
         render={
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
+            type="button"
             aria-label={`Open bag, ${displayTotalItems} item${displayTotalItems === 1 ? "" : "s"}`}
-            className="relative size-11 lg:size-9"
+            className={cn(
+              "kicker flex h-11 items-center px-3 transition-opacity hover:opacity-60 lg:h-auto lg:px-0",
+              className
+            )}
           />
         }
       >
-        <ShoppingBag className="size-5" />
-        {displayTotalItems > 0 && (
-          <span className="absolute top-1.5 right-1.5 flex size-4 items-center justify-center bg-brand text-[10px] leading-none text-brand-foreground">
-            {displayTotalItems > 9 ? "9+" : displayTotalItems}
-          </span>
-        )}
+        Bag{displayTotalItems > 0 ? ` (${displayTotalItems})` : ""}
       </SheetTrigger>
 
       <SheetContent side="right" className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
